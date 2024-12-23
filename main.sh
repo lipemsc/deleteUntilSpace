@@ -1,12 +1,12 @@
 #!/bin/bash
 
 getPercent () {
-        return $(df --output=pcent /dev/sda2 | tail -n 1 | cut -d% -f1)
+        return $(df --output=pcent $1 | tail -n 1 | cut -d% -f1)
 }
 
 deleteFile () {
-        folder="/var/lib/motion/"
-        getPercent
+        folder=$2
+	getPercent $1
         percent=$?
         if [ $percent -gt 98 ] ; then
                 fileToDelete=$(ls $folder | head -n 1)
@@ -14,7 +14,7 @@ deleteFile () {
                 echo "Removing $folder$fileToDelete"
                 rm $folder$fileToDelete
                 tput cuu1
-                deleteFile
+                deleteFile $1 $2
         else
                 tput el
                 echo Done
@@ -23,4 +23,4 @@ deleteFile () {
 
 }
 
-deleteFile
+deleteFile $1 $2
