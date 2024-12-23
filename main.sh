@@ -10,13 +10,13 @@ deleteFile () {
         percent=$?
         if [ $percent -gt 98 ] ; then
                 fileToDelete=$(ls $folder | head -n 1)
-                tput el
+                # tput el
                 echo "Removing $folder$fileToDelete"
                 rm $folder$fileToDelete
-                tput cuu1
+                # tput cuu1
                 deleteFile $1 $2
         else
-                tput el
+                #tput el
                 echo Done
         fi
 
